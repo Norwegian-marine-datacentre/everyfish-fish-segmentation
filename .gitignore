@@ -1,0 +1,8 @@
+.DS_Store
+.idea/
+.gitignore
+
+# Project-specific excludes
+.codebuddy/
+CODEBUDDY.md
+FishSegmentation_feedbackREADME.md
