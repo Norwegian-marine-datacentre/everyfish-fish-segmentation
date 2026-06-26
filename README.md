@@ -175,7 +175,7 @@ Both scripts compute:
 
 #### Batch Comparative Testing
 
-These scripts iterate over all source/target/ratio combinations (4 datasets × 4 targets × 5 ratios = 80 combinations) and evaluate each trained model on source-only, target-only, and combined test splits:
+These scripts iterate over all source/target/ratio combinations (4 datasets × 3 targets × 5 ratios = 60 combinations) and evaluate each trained model on source-only, target-only, and combined test splits:
 
 ```bash
 # YOLO: outputs yolo_result_{source}.json
