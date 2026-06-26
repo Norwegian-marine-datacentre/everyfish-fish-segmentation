@@ -6,7 +6,7 @@ This repository contains the code for the EVERYFISH AI module **"Species-Agnosti
 
 The study evaluates two state-of-the-art segmentation architectures:
 
-- **YOLO11-Seg** (Ultralytics)
+- **YOLO12-seg** (Ultralytics)
 - **Mask R-CNN** (Detectron2, ResNet-50 FPN backbone)
 
 Both models are trained and tested on four fish detection datasets collected from different commercial fishing vessels: **CatchMonitor**, **CatchHawk**, **CatchWam**, and **AutoFish**. The goal is to understand how well a model trained on images from one vessel/camera setup (the *source* domain) generalizes to images from another (the *target* domain), by mixing training data at different ratios (0%, 25%, 50%, 75%, 100% target-domain images).
@@ -52,7 +52,7 @@ conda activate fishseg
 conda install pytorch torchvision pytorch-cuda=11.8 -c pytorch -c nvidia
 
 # Install core dependencies
-pip install ultralytics        # YOLO11-Seg
+pip install ultralytics        # YOLO12-seg
 pip install opencv-python tqdm pyyaml numpy
 
 # Install Detectron2 (from pre-built wheel or source — see detectron2 documentation)
@@ -68,15 +68,18 @@ pip install pycocotools
 
 ### 1. Download the Data
 
-The raw datasets are provided in the **EVERYFISH-COCO** format. Each dataset contains images from a different fishing vessel camera setup, with per-image JSON annotation files that include polygon segmentation masks and bounding boxes for fish instances.
-After downloading, extract each dataset into the project root. The expected directory structures are:
+The raw datasets are provided in the **EVERYFISH-COCO** format. Each dataset contains images from a different fishing vessel camera setup (CatchMonitor, CatchHawk, CatchWam, and AutoFish), with per-image JSON annotation files that include polygon segmentation masks and bounding boxes for fish instances.
+
+> **Data availability**: The datasets are available on request. Please contact Hang Zhou via email at hang.zhou@uea.ac.uk to request access.
+
+After downloading, extract each dataset into the project root and follow the conversion steps below.
 
 ### 2. Convert Data Formats
 
 The raw EVERYFISH-COCO format needs to be converted into formats expected by each framework:
 
 - **COCO format** (for Mask R-CNN / Detectron2): standard COCO JSON with `images`, `annotations`, and `categories` keys
-- **YOLO format** (for YOLO11-Seg): images in `images/{split}/` and `.txt` label files in `labels/{split}/`
+- **YOLO format** (for YOLO12-seg): images in `images/{split}/` and `.txt` label files in `labels/{split}/`
 
 Before running, edit the configuration block at the top of each script to point `INPUT_ROOT` / `DATASET_ROOT` to your raw data directory.
 
@@ -130,7 +133,7 @@ python prepare_datasets/create_yaml_for_testing.py
 
 ### 4. Train Models
 
-#### YOLO11-Seg Training
+#### YOLO12-seg Training
 
 Edit `train_models/train.py` to set the `data_yaml` path, model configuration, and checkpoint. Then:
 
