@@ -13,10 +13,6 @@ Both models are trained and tested on four fish detection datasets collected fro
 
 All datasets are treated as **single-class** ("fish"), hence the term "species-agnostic" — the models segment fish regions without distinguishing between species.
 
-### What is EVERYFISH?
-
-[EVERYFISH](https://everyfish.eu/) is a Horizon Europe research project (grant agreement No 101059892) that develops AI-based tools for fully documented fisheries. It aims to automate catch monitoring, species identification, and size estimation on commercial fishing vessels using computer vision. This repository contributes the segmentation component that localizes individual fish in images, which is a prerequisite for downstream tasks like species classification and length measurement.
-
 ---
 
 ## Table of Contents
@@ -28,7 +24,6 @@ All datasets are treated as **single-class** ("fish"), hence the term "species-a
   - [3. Prepare Mixed Datasets](#3-prepare-mixed-datasets)
   - [4. Train Models](#4-train-models)
   - [5. Benchmark and Compare Models](#5-benchmark-and-compare-models)
-- [Repository Structure](#repository-structure)
 - [License](#license)
 - [Acknowledgement](#acknowledgement)
 - [Contact](#contact)
@@ -42,7 +37,7 @@ This project requires Python 3.8+ and a CUDA-capable GPU for training.
 ### 1. Clone the repository
 
 ```bash
-git clone <repo-url>
+git clone https://git.imr.no/everyfish/fish-segmentation.git
 cd comparative_study_code
 ```
 
@@ -74,38 +69,7 @@ pip install pycocotools
 ### 1. Download the Data
 
 The raw datasets are provided in the **EVERYFISH-COCO** format. Each dataset contains images from a different fishing vessel camera setup, with per-image JSON annotation files that include polygon segmentation masks and bounding boxes for fish instances.
-
-> **Data availability**: The datasets used in this study are published on Zenodo in the [EVERYFISH Community](https://zenodo.org/communities/everyfish/) ([Zhou _et al._, 2026](https://doi.org/10.21335/NMDC-450800267)). Download the following datasets:
-
-| Dataset       | Vessel / System | Description                                           |
-|---------------|-----------------|-------------------------------------------------------|
-| CatchMonitor  | UEA             | On-deck conveyor belt monitoring system               |
-| CatchHawk     | AZTI            | Hawk-like overhead camera system on catch handling    |
-| CatchWam      | FDWE / WAM      | Catch weighing and monitoring station                 |
-| AutoFish      | AutoFish        | Automated fish processing line camera                 |
-
 After downloading, extract each dataset into the project root. The expected directory structures are:
-
-```
-catchmonitor2.0/
-├── images/           # All images (.jpg)
-├── annotations/      # Per-image JSON annotations
-└── splits/           # train.json, val.json, test.json (lists of filenames)
-
-catchhawk/
-├── images/           # All images (.png → .jpg internally)
-├── annotations/      # Per-image JSON annotations
-└── info/             # train.txt, validation.txt, test.txt (filenames)
-
-catchwam/
-└── labels/           # train/, val/, test/ subdirectories with per-image JSONs
-
-autofish/autofish/
-├── images/                         # All images (.png)
-├── instances_train.json            # COCO-format annotation for train split
-├── instances_val.json              # COCO-format annotation for val split
-└── instances_test.json             # COCO-format annotation for test split
-```
 
 ### 2. Convert Data Formats
 
@@ -222,48 +186,6 @@ Results are saved as JSON files mapping `source → ratio → target → [metric
 
 ---
 
-## Repository Structure
-
-```
-comparative_study_code/
-│
-├── convertors_everyfishcoco2coco/    # Raw data → COCO format (for Mask R-CNN)
-│   ├── coco_autofish_convertor.py
-│   ├── coco_catchhawk_convertor.py
-│   ├── coco_catchmonitor_convertor.py
-│   └── coco_catchwam_convertor.py
-│
-├── convertors_everyfishcoco2yolo/    # Raw data → YOLO format
-│   ├── autofish_convertor.py
-│   ├── catchhawk_convertor.py
-│   ├── catchmonitor_convertor.py
-│   └── catchwam_convertor.py
-│
-├── prepare_datasets/                 # Create mixed train/test sets
-│   ├── create_compara_coco_datasets.py
-│   ├── create_compara_coco_testsets.py
-│   ├── create_compara_yolo_datasets.py
-│   └── create_yaml_for_testing.py
-│
-├── train_models/                     # Training scripts
-│   ├── train.py                      # YOLO11-Seg training
-│   └── train_mrcnn.py                # Mask R-CNN training
-│
-├── test_models/                      # Evaluation and benchmarking
-│   ├── benchmark.py                  # Single YOLO model evaluation
-│   ├── benchmark_mrcnn.py            # Single Mask R-CNN model evaluation
-│   ├── comparative_benchmark.py      # YOLO IoU computation utilities
-│   ├── comparative_benchmark_mrcnn.py # Mask R-CNN mAP/mIoU utilities
-│   ├── comparative_test.py           # Batch YOLO comparison
-│   └── comparative_test_mrcnn.py     # Batch Mask R-CNN comparison
-│
-├── EN_FundedbytheEU_RGB_POS.png      # EU funding acknowledgement logo
-├── CODEBUDDY.md                      # Guidance for CodeBuddy coding assistant
-└── README.md                         # This file
-```
-
----
-
 ## License
 
 This project is licensed under the terms included in the EVERYFISH project.
@@ -275,13 +197,8 @@ This project is licensed under the terms included in the EVERYFISH project.
 <img src="EN_FundedbytheEU_RGB_POS.png" alt="Funded by the European Union" width="400"/>
 
 This project has received funding from the European Union's Horizon Europe research and innovation programme under grant agreement No 101059892 (EVERYFISH).
-
-We thank all EVERYFISH partners who contributed to the data collection and annotation: UEA (CatchMonitor), AZTI (CatchHawk), FDWE/WAM (CatchWam), and the AutoFish team.
-
-**Citation**: Zhou _et al._ (2026). EVERYFISH-COCO: Annotated fish segmentation datasets from commercial fishing vessels. [https://doi.org/10.21335/NMDC-450800267](https://doi.org/10.21335/NMDC-450800267)
-
 ---
 
 ## Contact
 
-For questions about this codebase, please contact the EVERYFISH project through [everyfish.eu](https://everyfish.eu/) or open an issue in this repository.
+For questions about this codebase, please contact Hang Zhou (hang.zhou@uea.ac.uk).
