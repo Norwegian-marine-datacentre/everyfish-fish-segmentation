@@ -197,7 +197,7 @@ This project is licensed under the terms included in the EVERYFISH project.
 <img src="EN_FundedbytheEU_RGB_POS.png" alt="Funded by the European Union" width="400"/>
 
 This project has received funding from the European Union's Horizon Europe research and innovation programme under grant agreement No 101059892 (EVERYFISH).
----
+
 
 ## Contact
 
