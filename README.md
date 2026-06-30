@@ -191,7 +191,7 @@ Results are saved as JSON files mapping `source → ratio → target → [metric
 
 ## License
 
-This project is licensed under the terms included in the EVERYFISH project.
+This project is licensed under CC BY-SA 4.0.
 
 ---
 
